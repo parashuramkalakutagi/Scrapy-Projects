@@ -7,7 +7,7 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider,Rule
 from ..items import DemoItem
 
-# extracting and storing data in data base
+
 
 
 class Book_Spider(scrapy.Spider):
