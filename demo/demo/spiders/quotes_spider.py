@@ -7,26 +7,7 @@ from scrapy.spiders import Rule,CrawlSpider
 from scrapy.linkextractors import LinkExtractor
 
 
-# class scrapy_quotes(scrapy.Spider):
-#     name = 'quotes'
-#     start_urls = [
-#         'https://quotes.toscrape.com/tag/books/'
-#     ]
-#
-#     def parse(self, response: Response, **kwargs: Any) -> Any:
-#         Author_name  = response.css('small.author::text').extract()
-#         about = response.css('span.text::text').extract()
-#         # tags = response.css('a.tag::text').extract()
-#         data = {
-#             'Author_Names':Author_name,
-#             'Book_title':about,
-#         }
-#         df = pd.DataFrame(data) # data dumping into excel sheet
-#         df.to_excel('books.xlsx', index=False)
-#         return data
-#
 
-#
 # MULTIPLE PAGES SCRAPING DATA FUNCTION
 
 class Scrapy_books(CrawlSpider):
@@ -70,36 +51,3 @@ class Books_spider(scrapy.Spider):
             }
 
 
-class AmzonSpider(scrapy.Spider):
-    name = 'amazon'
-    # page_number = 2
-    start_urls = [
-        'https://www.flipkart.com/search?q=mobile&sid=tyy%2C4io&as=on&as-show=on&otracker=AS_QueryStore_OrganicAutoSuggest_2_5_na_na_na&otracker1=AS_QueryStore_OrganicAutoSuggest_2_5_na_na_na&as-pos=2&as-type=RECENT'
-        '&suggestionId=mobile%7CMobiles&requestId=41ed9b92-e14c-4e60-ab52-4c9bbd49f4f8&as-backfill=on&page=1'
-    ]
-
-    def parse(self, response: Response, **kwargs: Any) -> Any:
-        all_divs = response.css('div._2kHMtA')
-
-        for div in all_divs:
-            mobile_name = div.css('._4rR01T::text').get()
-            price = div.css('._1_WHN1::text').get()
-            detail = div.css('.rgWa7D::text').get()
-            image = div.css('._396cs4::attr(src)').get()
-            price_off = div.css('._3tbKJL span::text').get()
-
-            yield {
-                'mobile_name':mobile_name,
-                'price':price,
-                'about':detail,
-                'price_off':price_off,
-                'mobile_image':image
-
-            }
-
-        # next_page = 'https://www.flipkart.com/search?q=mobile&sid=tyy%2C4io&as=on&as-show=on&otracker=AS_QueryStore_OrganicAutoSuggest_2_5_na_na_na&otracker1=AS_QueryStore_OrganicAutoSuggest_2_5_na_na_na&as-pos=2&as-type=RECENT'
-        # '&suggestionId=mobile%7CMobiles&requestId=41ed9b92-e14c-4e60-ab52-4c9bbd49f4f8&as-backfill=on&page='+str(AmzonSpider.page_number)+''
-        # print(next_page)
-        # if AmzonSpider.page_number < 31:
-        #     AmzonSpider.page_number+=1
-        #     yield response.follow(next_page, callback=self.parse)

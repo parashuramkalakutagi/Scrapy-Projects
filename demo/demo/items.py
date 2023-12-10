@@ -8,9 +8,18 @@ import scrapy
 
 class DemoItem(scrapy.Item):
     # define the fields for your item here like:
+    name = scrapy.Field()
+    author = scrapy.Field()
+    tag = scrapy.Field()
+
+
+
+class DemoItems(scrapy.Item):
+    # define the fields for your item here like:
     book_name = scrapy.Field()
     price = scrapy.Field()
     availability = scrapy.Field()
+
 
 
 class AmazonItem(scrapy.Item):
