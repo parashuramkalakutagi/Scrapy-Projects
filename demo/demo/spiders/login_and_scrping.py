@@ -26,15 +26,20 @@ class scrapy_quotes(scrapy.Spider):
 
     def strat_scraping(self,response):
         open_in_browser(response)
-        Author_name = response.css('small.author::text').extract()
-        about = response.css('span.text::text').extract()
-        tags = response.css('.tags::text').extract()
-        data = {
-                    'Author_Names':Author_name,
-                    'Book_title':about,
-                    'tags':tags
-                }
-        yield data
+
+        all_divs = response.css('div.quote')
+        for divs in all_divs:
+            Author_name = divs.css('small.author::text').get()
+            about = divs.css('span.text::text').get()
+            tags = divs.css('a.tag::text').get()
+            data = {
+                'Author_Names': Author_name,
+                'Book_title': about,
+                'tags': tags
+            }
+            yield data
+
+
 
 
 #
